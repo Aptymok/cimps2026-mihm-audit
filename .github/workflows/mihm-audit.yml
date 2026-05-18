@@ -1,0 +1,30 @@
+name: MIHM CIMPS2026 Audit
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run MIHM audit
+        run: python run_audit.py
+
+      - name: Upload audit outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: mihm-cimps2026-audit
+          path: outputs/

@@ -1,0 +1,33 @@
+{
+  "audit_id": "MIHM-CIMPS2026-2026-05-18T18:55:31.243625",
+  "input_file": "data\\raw\\MIHM_IEE (1).pdf",
+  "sha256": "11b0755c23100394d29c6668d24fa8cbe7234a6b9f3d86fc6c306cbc5096bbae",
+  "pages": 3,
+  "mihm_variables_detected": {
+    "F_s": true,
+    "G_f": true,
+    "C_s": true,
+    "R_sem": true,
+    "C_sem": true,
+    "Phi": false,
+    "I_mc": false,
+    "E_r": true,
+    "V_i": true,
+    "D_i": true,
+    "D_cog": true
+  },
+  "ethics_of_silence": [
+    {
+      "variable": "Phi",
+      "value": null,
+      "reason": "No se encontró evidencia textual suficiente en el PDF."
+    },
+    {
+      "variable": "I_mc",
+      "value": null,
+      "reason": "No se encontró evidencia textual suficiente en el PDF."
+    }
+  ],
+  "status": "AUDITABLE",
+  "note": "Este reporte no valida verdad científica; valida trazabilidad documental mínima."
+}
