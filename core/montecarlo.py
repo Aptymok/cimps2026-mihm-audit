@@ -82,7 +82,7 @@ def coherence_score(wsi, nti, hour, track):
 # ------------------------------------------------------------
 # Simulación Monte Carlo con shocks y varianzas realistas
 # ------------------------------------------------------------
-def run_montecarlo(n_iter=50000):
+def run_montecarlo(n_iter=5000):
     np.random.seed(42)
     hours = np.arange(24)
     

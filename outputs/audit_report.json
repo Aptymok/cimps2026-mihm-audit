@@ -1,7 +1,7 @@
 {
-  "audit_id": "MIHM-CIMPS2026-2026-05-20T15:53:04.655983",
+  "audit_id": "MIHM-CIMPS2026-2026-05-20T16:33:02.621893",
   "filename": "MIHM_IEE.pdf",
-  "input_file": "D:\\cimps2026_audit\\data\\raw\\MIHM_IEE.pdf",
+  "input_file": "data\\raw\\MIHM_IEE.pdf",
   "sha256": "11b0755c23100394d29c6668d24fa8cbe7234a6b9f3d86fc6c306cbc5096bbae",
   "characters_extracted": 12077,
   "metadata_validation": {
@@ -18,5 +18,5 @@
     "ethics_of_silence": []
   },
   "operational_status": "AUDITABLE",
-  "generated_at": "2026-05-20T15:53:04.655983"
+  "generated_at": "2026-05-20T16:33:02.621893"
 }

@@ -1,4 +1,4 @@
-﻿# core/world_spectrum.py - VersiÃ³n corregida con manejo SSL
+﻿# core/world_spectrum.py - Versión corregida con manejo SSL
 
 import asyncio
 import sys
@@ -11,7 +11,7 @@ import ssl
 import certifi
 import httpx
 
-# â”€â”€ CONSTANTES CON URLs CORREGIDAS â”€â”€
+# ── CONSTANTES CON URLs CORREGIDAS ──
 DATA_SOURCES = {
     "nasa": {
         "url": "https://api.nasa.gov/DONKI/FLR",
@@ -28,14 +28,14 @@ DATA_SOURCES = {
         "mihm_var": "E_r",
     },
     "bbc_world": {
-        "url": "http://feeds.bbci.co.uk/news/rss.xml",  # â† HTTP en lugar de HTTPS
+        "url": "http://feeds.bbci.co.uk/news/rss.xml",  # ← HTTP en lugar de HTTPS
         "ttl_hours": 0.5,
         "weight": 0.25,
         "nti_base": 0.70,
         "mihm_var": "D_cog",
     },
     "hn": {
-        "url": "https://hnrss.org/frontpage",  # â† URL alternativa mÃ¡s confiable
+        "url": "https://hnrss.org/frontpage",  # ← URL alternativa más confiable
         "ttl_hours": 0.33,
         "weight": 0.20,
         "nti_base": 0.75,
@@ -57,7 +57,7 @@ DATA_SOURCES = {
     },
 }
 
-# â”€â”€ CACHE â”€â”€
+# ── CACHE ──
 _CACHE: Dict[str, dict] = {}
 
 def _is_fresh(key: str) -> bool:
@@ -118,41 +118,50 @@ def _get_stale_fallback(key: str, max_age_hours: int = 24) -> Optional[dict]:
     return result
 
 
-# â”€â”€ SENSORES CON SSL CORREGIDO â”€â”€
+# ── SENSORES CON SSL CORREGIDO ──
 async def _fetch_nasa_eonet() -> dict:
-    """EONET es mÃ¡s estable y no requiere API key para uso bÃ¡sico"""
+    """EONET es más estable y no requiere API key para uso básico."""
     key = "nasa"
     url = "https://eonet.gsfc.nasa.gov/api/v2.1/events?limit=100"
-    
+
+    if _is_fresh(key):
+        cached = _cache_get(key)
+        if cached:
+            return cached
+
     try:
-       async with httpx.AsyncClient(
-    timeout=15.0,
-    follow_redirects=True,
-    verify=False,
-    headers={"User-Agent": "SFI-Agent/3.1 (systemfriction.org)"}
-) as client:
-    r = await client.get(url)
+        async with httpx.AsyncClient(
+            timeout=15.0,
+            follow_redirects=True,
+            verify=False,
+            headers={"User-Agent": "SFI-Agent/3.1 (systemfriction.org)"}
+        ) as client:
+            r = await client.get(url)
 
         r.raise_for_status()
         data = r.json()
         events = data.get("events", [])
         raw_count = len(events)
         norm_val = min(1.0, raw_count / 100.0)
-        
+
         result = {
-    "key": key,
-    "label": "Natural Events (EONET)",
-    "value": norm_val,
-    "raw": raw_count,
-    "nti": DATA_SOURCES[key]["nti_base"],
-    "nti_base": DATA_SOURCES[key]["nti_base"],
-    "weight": DATA_SOURCES[key]["weight"],
-    "mihm_var": DATA_SOURCES[key]["mihm_var"],
-    "simulated": False,
-    "ts": datetime.utcnow().isoformat(),
-}
-_cache_set(key, result)
-return result
+            "key": key,
+            "label": "Natural Events (EONET)",
+            "value": norm_val,
+            "raw": raw_count,
+            "nti": DATA_SOURCES[key]["nti_base"],
+            "nti_base": DATA_SOURCES[key]["nti_base"],
+            "weight": DATA_SOURCES[key]["weight"],
+            "mihm_var": DATA_SOURCES[key]["mihm_var"],
+            "simulated": False,
+            "ts": datetime.utcnow().isoformat(),
+        }
+
+        _cache_set(key, result)
+        return result
+
+    except Exception as e:
+        return _make_error_source(key, str(e))
 
 
     except Exception as e:
@@ -163,14 +172,14 @@ async def _fetch_worldbank(retry_count=2) -> dict:
     if _is_fresh(key):
         return _cache_get(key)
     
-    # URL mÃ¡s simple y confiable
+    # URL más simple y confiable
     url = "https://api.worldbank.org/v2/country/WLD/indicator/NY.GDP.MKTP.KD.ZG?format=json"
     
     sys.stderr.write(f"[WorldBank] Fetching GDP data...")
     
     for attempt in range(retry_count):
         try:
-            async with httpx.AsyncClient(timeout=15.0, follow_redirects=True, verify=False, headers={"User-Agent": "SFI-Agent/3.1 (systemfriction.org)"}) as client:
+            async with httpx.AsyncClient(timeout=15.0) as client:
                 r = await client.get(url, headers={"Accept": "application/json"})
             
             # Verificar si es JSON
@@ -193,7 +202,7 @@ async def _fetch_worldbank(retry_count=2) -> dict:
             # Extraer datos
             if isinstance(payload, list) and len(payload) > 1:
                 records = payload[1]
-                # Buscar el valor mÃ¡s reciente no nulo
+                # Buscar el valor más reciente no nulo
                 rec = None
                 for item in records:
                     if item.get("value") is not None:
@@ -247,7 +256,7 @@ async def _fetch_rss(src_key: str) -> dict:
         async with httpx.AsyncClient(
             timeout=15.0, 
             follow_redirects=True,
-            verify=False  # Deshabilitar verificaciÃ³n SSL para RSS (seguridad baja para fuentes pÃºblicas)
+            verify=False  # Deshabilitar verificación SSL para RSS (seguridad baja para fuentes públicas)
         ) as client:
             r = await client.get(cfg["url"], headers=headers)
         
@@ -294,14 +303,14 @@ async def _fetch_rss(src_key: str) -> dict:
     except Exception as e:
         return _make_error_source(src_key, str(e)[:100])
 
-# â”€â”€ AGREGADOR PRINCIPAL â”€â”€
+# ── AGREGADOR PRINCIPAL ──
 async def get_world_spectrum(nasa_key: str = "DEMO_KEY") -> dict:
     results = await asyncio.gather(
         _fetch_nasa_eonet(),
         _fetch_worldbank(),
         _fetch_rss("bbc_world"),
         _fetch_rss("hn"),
-        _fetch_rss("aljazeera"),  # â† Cambiado de reuters
+        _fetch_rss("aljazeera"),  # ← Cambiado de reuters
         return_exceptions=False,
     )
     sources = [r for r in results if isinstance(r, dict)]
@@ -329,7 +338,7 @@ async def get_world_spectrum(nasa_key: str = "DEMO_KEY") -> dict:
         "degraded_sources": [s["key"] for s in sources if s.get("simulated")],
     }
 
-# â”€â”€ CLI â”€â”€
+# ── CLI ──
 async def main():
     import json
     try:
