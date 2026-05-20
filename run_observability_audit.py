@@ -59,7 +59,7 @@ async def main():
 
     world = await get_world_spectrum()
 
-    montecarlo_df, n_iter = run_montecarlo(50000)
+    montecarlo_df, n_iter = run_montecarlo(5000)
     montecarlo_summary = {
         "iterations": n_iter,
         "best_windows": montecarlo_df.nlargest(5, "mean").round(6).to_dict(orient="records"),
