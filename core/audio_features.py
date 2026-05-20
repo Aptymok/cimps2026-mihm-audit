@@ -90,12 +90,6 @@ class MIHMAcousticExtractor:
                 sr=sr,
                 aggregate=None
             )
-        except AttributeError:
-            tempo_result = librosa.beat.tempo(
-                onset_envelope=onset_env,
-                sr=sr,
-                aggregate=None
-            )
         tempo = self._safe_mean(tempo_result, default=0.0)
 
         rms = librosa.feature.rms(y=y)[0]
