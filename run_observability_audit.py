@@ -26,7 +26,8 @@ def run_audio_extract(audio_path: str | None, nti: float):
     proc = subprocess.run(
         [
             sys.executable,
-            "core/mihm_extract_full.py",
+            "-m",
+            "core.mihm_extract_full",
             audio_path,
             "--no-text",
             "--nti",

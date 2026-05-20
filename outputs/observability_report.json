@@ -12,7 +12,7 @@
         "weight": 0.1,
         "mihm_var": "G_f",
         "simulated": false,
-        "ts": "2026-05-20T16:40:42.564503"
+        "ts": "2026-05-20T16:50:00.355229"
       },
       {
         "key": "worldbank",
@@ -25,7 +25,7 @@
         "weight": 0.3,
         "mihm_var": "E_r",
         "simulated": false,
-        "ts": "2026-05-20T16:40:42.457068"
+        "ts": "2026-05-20T16:50:00.008062"
       },
       {
         "key": "bbc_world",
@@ -39,7 +39,7 @@
         "weight": 0.25,
         "mihm_var": "D_cog",
         "simulated": false,
-        "ts": "2026-05-20T16:40:50.819081"
+        "ts": "2026-05-20T16:50:01.764609"
       },
       {
         "key": "hn",
@@ -53,7 +53,7 @@
         "weight": 0.2,
         "mihm_var": "V_i",
         "simulated": false,
-        "ts": "2026-05-20T16:40:42.440259"
+        "ts": "2026-05-20T16:50:00.214041"
       },
       {
         "key": "aljazeera",
@@ -67,12 +67,12 @@
         "weight": 0.15,
         "mihm_var": "R_sem",
         "simulated": false,
-        "ts": "2026-05-20T16:40:49.808439"
+        "ts": "2026-05-20T16:50:00.168038"
       }
     ],
     "wsi": 0.64666,
     "nti": 0.556,
-    "ts": "2026-05-20T16:40:50.820636",
+    "ts": "2026-05-20T16:50:01.765286",
     "degraded_sources": []
   },
   "montecarlo": {
@@ -147,10 +147,30 @@
     ]
   },
   "audio_extraction": {
-    "status": "ERROR",
-    "stdout": "",
-    "stderr": "Traceback (most recent call last):\n  File \"D:\\cimps2026_audit\\core\\mihm_extract_full.py\", line 13, in <module>\n    from core.audio_features import MIHMAcousticExtractor\nModuleNotFoundError: No module named 'core'\n",
-    "returncode": 1
+    "status": "OK",
+    "file": "rem618.wav",
+    "duration_sec": 150.4,
+    "mihm_vector": {
+      "F_s": 0.448642,
+      "G_f": 0.677538,
+      "C_s": 0.79893,
+      "R_sem": null,
+      "C_sem": null,
+      "Phi": 0.468428,
+      "I_mc": 0.676779,
+      "E_r": 0.815097,
+      "V_i": 0.386414,
+      "D_i": 0.573282,
+      "D_cog": 0.757688
+    },
+    "penalties": 0.041573,
+    "weighted_sum": 0.495075,
+    "ihg_raw": 0.453502,
+    "ihg_final": 0.453502,
+    "nti_used": 0.5,
+    "emission_valid": true,
+    "directive": "NUNCA SIMULA - Datos extraídos directamente del archivo y manual MIHM v3.0",
+    "warning": "SIN_TEXTO_FLAG - R_sem y C_sem no evaluadas (no se simulan)"
   },
   "validity_boundary": "This audit verifies executable observability components. It does not certify scientific truth or aesthetic value."
 }

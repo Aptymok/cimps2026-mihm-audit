@@ -127,7 +127,7 @@ def run_montecarlo(n_iter=5000):
 # Main
 # ------------------------------------------------------------
 if __name__ == "__main__":
-    n_iter = 50000
+    n_iter = 5000
     print(f"Ejecutando Monte Carlo con {n_iter} iteraciones y shocks...", file=sys.stderr)
     df, n = run_montecarlo(n_iter)
     
