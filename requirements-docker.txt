@@ -3,3 +3,8 @@ uvicorn
 pypdf
 python-multipart
 pydantic
+httpx
+certifi
+numpy
+pandas
+matplotlib
