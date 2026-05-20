@@ -1,5 +1,7 @@
 {
-  "file": "data\\raw\\MIHM_IEE (1).pdf",
+  "audit_id": "MIHM-CIMPS2026-TEST",
+  "filename": "MIHM_IEE.pdf",
   "sha256": "11b0755c23100394d29c6668d24fa8cbe7234a6b9f3d86fc6c306cbc5096bbae",
-  "generated_at": "MIHM-CIMPS2026-2026-05-18T18:55:31.243625"
+  "generated_at": "2026-05-20T15:40:44.774093",
+  "status": "AUDITABLE"
 }
