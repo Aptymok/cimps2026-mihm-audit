@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir --trusted-host pypi.org --trusted-host files.pyth
 
 COPY . .
 
-CMD ["uvicorn", "services.pdf_ingestor.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "services.report_generator.main:app", "--host", "0.0.0.0", "--port", "8003"]

@@ -1,0 +1,34 @@
+﻿services:
+  pdf_ingestor:
+    build:
+      context: .
+      dockerfile: services/pdf_ingestor/Dockerfile
+    container_name: mihm_pdf_ingestor
+    ports:
+      - "8000:8000"
+
+  metadata_validator:
+    build:
+      context: .
+      dockerfile: services/metadata_validator/Dockerfile
+    container_name: mihm_metadata_validator
+    ports:
+      - "8001:8001"
+
+  audit_gateway:
+    build:
+      context: .
+      dockerfile: services/audit_gateway/Dockerfile
+    container_name: mihm_audit_gateway
+    ports:
+      - "8002:8002"
+
+  report_generator:
+    build:
+      context: .
+      dockerfile: services/report_generator/Dockerfile
+    container_name: mihm_report_generator
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./outputs:/app/outputs
