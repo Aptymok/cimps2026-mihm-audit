@@ -8,3 +8,6 @@ certifi
 numpy
 pandas
 matplotlib
+scipy
+soundfile
+librosa
